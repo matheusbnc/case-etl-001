@@ -37,4 +37,30 @@ def process_df(clientes: pd.DataFrame, pedidos: pd.DataFrame) -> pd.DataFrame:
     Returns:
         pd.DataFrame: Dataframe processado
     """
-    
+    pedidos_clientes = clientes.merge(pedidos, left_on="cliente_id", right_on="cliente_id")
+
+    pedidos_clientes["valor_total"] = pedidos_clientes["quantidade"]*pedidos_clientes["preco_unitario"]
+
+    valor_por_cliente = pedidos_clientes.groupby(["cliente_id", "nome", "email"])["valor_total"].sum().reset_index()
+
+    def classificar_cliente(valor: int) -> str:
+        if valor <= 500:
+            return "fraco"
+        if valor <= 2000:
+            return "médio"
+        if valor > 2000:
+            return "ótimo"
+
+    valor_por_cliente["classificacao"] = valor_por_cliente["valor_total"].apply(classificar_cliente)
+
+    return valor_por_cliente
+
+
+
+
+""" clientes_path = "raw_data\\clientes.csv"
+pedidos_path = "raw_data\\pedidos.csv"
+
+clientes, pedidos = load_csv(clientes_path, pedidos_path)
+df_final = process_df(clientes, pedidos)
+print(df_final) """
