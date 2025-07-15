@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-def load_csv(clientes_path: str, pedidos_path: str) -> pd.DataFrame:
+def extract_csv(clientes_path: str, pedidos_path: str) -> pd.DataFrame:
     """
     Lê dois arquivos e retorna-os como um DataFrame do Pandas.
 
@@ -56,11 +56,23 @@ def process_df(clientes: pd.DataFrame, pedidos: pd.DataFrame) -> pd.DataFrame:
     return valor_por_cliente
 
 
+def load_csv(df: pd.DataFrame, output_path: str) -> None:
+    """
+    Recebe um DataFrame, transforma em csv e salva em um path.
 
+    Args:
 
-""" clientes_path = "raw_data\\clientes.csv"
-pedidos_path = "raw_data\\pedidos.csv"
+    """
+    df.to_csv(output_path, index=False)
+    print(f"Relatório salvo em: {output_path}")
 
-clientes, pedidos = load_csv(clientes_path, pedidos_path)
-df_final = process_df(clientes, pedidos)
-print(df_final) """
+def main():
+    clientes_path = "raw_data\\clientes.csv"
+    pedidos_path = "raw_data\\pedidos.csv"
+    output_path = "processed_data\\relatorio_clientes.csv"
+    clientes, pedidos = extract_csv(clientes_path, pedidos_path)
+    df_final = process_df(clientes, pedidos)
+    load_csv(df_final, output_path)
+
+if __name__ == "__main__":
+    main()
