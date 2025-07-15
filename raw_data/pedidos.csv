@@ -1,0 +1,9 @@
+pedido_id,cliente_id,produto,quantidade,preco_unitario
+101,1,Notebook,1,3500.00
+102,2,Mouse,2,50.00
+103,3,Teclado,1,120.00
+104,2,Monitor,1,900.00
+105,1,Cabo HDMI,2,35.00
+106,4,Cadeira Gamer,1,1300.00
+107,5,Webcam,1,250.00
+108,5,Fone,1,400.00
